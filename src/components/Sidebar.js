@@ -13,7 +13,9 @@ import info from "../info.png";
 import { Link } from "react-router-dom";
 export default function Sidebar() {
   const user = JSON.parse(localStorage.getItem('user'));
-  // const handleLogout = () => {};
+  const handleLogout = () => {
+    localStorage.clear();
+  };
   return (
     <>
       <div className="container-fluid d-flex">
@@ -83,7 +85,7 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link class="dropdown-item" to="/login">
-                  <button className="btn btn-danger">Logout</button>
+                  <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </Link>
               </li>
             </ul>

@@ -18,7 +18,7 @@ function Signup() {
       .post('http://localhost:3001/signup', { name, email, number, age, username, password, gender })
       .then((result) => {console.log(result)
       if(result.data === "Username Unavailable"){
-        alert("Username Unavailable. Please choose a different username");
+        alert("Username or email is already in Use");
       }
       else{
         navigate('/login');

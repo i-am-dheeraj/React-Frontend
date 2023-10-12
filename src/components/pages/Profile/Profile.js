@@ -31,6 +31,11 @@ export default function Profile() {
       setCountry(result.data.country);
     })
   },[]);
+  // const postData = async (e) =>{
+  //   e.preventDefault();
+  //   const res = await fetch("https://project1-2ac92-default-rtdb.firebaseio.com/Admit-Panel");
+
+  // }
   const user = JSON.parse(localStorage.getItem('user'));
   const id = user._id;
   const updateProfile=()=>{
@@ -48,7 +53,7 @@ export default function Profile() {
     <>
       <Sidebar />
       <div className="container my-lg-5 profile">
-        <form>
+        <form method = "post">
           <div className="form-group">
             <img src={myimage1} alt=".." />
             <label for="image">

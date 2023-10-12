@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
-// import image1 from "../pexels-shvets-production-6975558.jpg";
+
 import myimage1 from "./pages/Profile/img1.png";
 import axios from "axios";
-
 export default function Blog() {
-  const [blogList, setBlogList] = useState("")
-  const [dspblog, setDspblog] = useState([])
+  const [blogList, setBlogList] = useState([])
   const fstyle = {
     borderRadius: "30px",
   };
-  const user = JSON.parse(localStorage.getItem('user'));
+
   const [blogObj, setBlogObj] = useState({
-    "userId": "",
     "title": "",
     "description": "",
     "image": "",
-    "_id" :""
+    "_id":""
   })
-
-  const updateBlogForm = (e, field) => {
+  
+  const updateBlogForm = (e, field,id) => {
+    console.log(id,'dd')
     setBlogObj((prevValue) => {
       return {
-        userId: user._id,
         title: field === 'title' ? e.target.value : prevValue.title,
         description: field === 'description' ? e.target.value : prevValue.description,
         image: field === 'image' ? e.target.value : prevValue.image,
+        _id: id
       }
     })
   }
@@ -33,11 +31,11 @@ export default function Blog() {
 
 
   const createBlog = () => {
-    // console.log(blogObj);
+    console.log("data5656", blogObj);
     axios
       .post('http://localhost:3001/bloguser/blogadd', blogObj)
       .then((result) => {
-        console.log(result.data);
+        console.log(result)
       })
       .catch((err) => console.log(err));
   }
@@ -54,69 +52,59 @@ export default function Blog() {
       });
   }
   const openEditModal = (blog) => {
+    console.log(blog._id,'open')
     setBlogObj({
       title: blog.title,
       description: blog.description,
       image: blog.image,
-      _id: blog._id
+      _id: blog._id,
     });
-    document.getElementById('staticBackdrop').classList.add('show');
-  };
-  const updateBlog = () => {
-    console.log("dar4545",blogObj);
+    document.getElementById('staticBackdrop')?.classList.add('show');
+  }
+
+  const closeModal = () =>{
+    document.getElementById('staticBackdrop')?.classList.remove('show');
+
+  }
+
+
+  const updateBlog = (id) => {
+console.log(id,'update')
     axios
-      .put(`http://localhost:3001/bloguser/blogupdate/${blogObj._id}`, blogObj)
+      .put(`http://localhost:3001/bloguser/blogupdate/${id}`, blogObj)
       .then((response) => {
         console.log('Blog updated:', response.data);
-        setBlogList((prevBlogList) =>
-          [prevBlogList].map((blog) =>
-            blog._id === blogObj._id ? { blog: blogObj } : blog
-          )
-          
-        );
-        console.log(blogObj._id);
+        getAllBlogs()
       })
       .catch((error) => {
         console.error('Error updating blog:', error);
       });
   };
-  // const [des, setDes] = useState("");
+
 
   useEffect(() => {
-    const id = JSON.parse(localStorage.getItem('user'));
-    axios.get(`http://localhost:3001/bloguser/getbyuserID/${id._id}`)
-      .then((result) => {
-        const arr = [result.data];
-        // const len = arr[0].length;
-        console.log(arr[0]);
-        setDspblog(arr[0]);
+    getAllBlogs()
+  }, [])
 
+  const getAllBlogs = () => {
+    const apiUrl = 'http://localhost:3001/bloguser/blogget';
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data, 'dddddd')
+        setBlogList(response.data)
 
 
       })
-      .catch(err => (console.log(err)))
-  },[]);
-
-  // const getAllBlogs = () => {
-  //   const apiUrl = 'http://localhost:3001/bloguser/blogget';
-
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       console.log(response.data, 'dddddd')
-  //       setBlogList(response.data)
-
-
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error:', err);
-  //     });
-  // };
+      .catch((err) => {
+        console.error('Error:', err);
+      });
+  };
 
 
   return (
     <>
-
       <Sidebar />
       <div className="container blog">
         <div className="blog-sec">
@@ -128,7 +116,7 @@ export default function Blog() {
               <div className="col text-end">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop"
                 >
@@ -138,33 +126,34 @@ export default function Blog() {
             </div>
           </div>
           <div
-            class="modal fade"
+            className="modal fade"
             id="staticBackdrop"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
-            tabindex="-1"
+            tabIndex="-1"
             aria-labelledby="staticBackdropLabel"
             aria-hidden="true"
           >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="staticBackdropLabel">
                     Blog insertion{" "}
                   </h1>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
+                    onClick={()=> closeModal()}
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
 
                   <form>
                     <div className="form-group">
                       <img src={myimage1} alt=".." />
-                      <label for="image">
+                      <label htmlFor="image">
                         &nbsp;<b>Image</b>
                       </label>
                       <br />
@@ -177,7 +166,7 @@ export default function Blog() {
                       />
                     </div>
                     <div className="form-group my-2">
-                      <label for="title" className="headings">
+                      <label htmlFor="title" className="headings">
                         <b>Title</b>
                       </label>
                       <br />
@@ -192,7 +181,7 @@ export default function Blog() {
                       />
                     </div>
                     <div className="form-group my-2">
-                      <label for="descp" className="headings">
+                      <label htmlFor="descp" className="headings">
                         <b>Description</b>
                       </label>
                       <br />
@@ -208,24 +197,17 @@ export default function Blog() {
                     </div>
                   </form>
                 </div>
-                <div class="modal-footer">
+                <div className="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary"
+                    className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
                     Discard
                   </button>
-                  <button type="button" onClick={() => {
-                    if (blogObj._id) {
-                      updateBlog();
-                    } else {
-                      createBlog();
-                      console.log(blogObj._id);
-                    }
-                  }
-                  } class="btn btn-primary" data-bs-dismiss="modal">{blogObj._id ? 'Update Blog' : 'Create Blog'}
-
+                  <button type="button" onClick={() => createBlog()
+                  } className="btn btn-primary" data-bs-dismiss="modal">
+                    Add
                   </button>
                 </div>
               </div>
@@ -263,15 +245,14 @@ export default function Blog() {
                 <hr />
               </div>
             </div>
-            {dspblog.map((data, index) => (
-              <div className="blog-body-sec">
-
-                <div className="row">
+            <div className="blog-body-sec">
+              {blogList.map((data, index) => (
+                <div className="row" key={data?._id}>
                   <div className="col-1">
                     <p className="blog-text">{index + 1}</p>
                   </div>
                   <div className="col-2">
-                    <img src={myimage1} alt=".." />
+                    <img src={data.image} alt=".." />
                   </div>
                   <div className="col">
                     <p className="blog-text">{data.title}</p>
@@ -285,26 +266,95 @@ export default function Blog() {
                         <div className="col">
                           <button
                             type="button"
-                            class="btn btn-primary"
+                            className="btn btn-primary"
                             data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
+                            data-bs-target="#edit"
                             onClick={() => openEditModal(data)}
                           >
                             Edit
                           </button>
+                       
                         </div>
+                        <div className="modal" tabIndex="-1" id="edit">
+                            <div className="modal-dialog">
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  <h1 className="modal-title">Edit Blog{" "}
+                                  </h1>
+                                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=> closeModal()}></button>
+                                </div>
+                                <div className="modal-body">
+                                  <form>
+                                    <div className="form-group">
+                                      <img src={myimage1} alt=".." />
+                                      <label htmlFor="image">
+                                        &nbsp;<b>Image</b>
+                                      </label>
+                                      <br />
+                                      <input
+                                        type="file"
+                                        className="form-control-file"
+                                        id="image"
+                                        accept="image/*"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div className="form-group my-2">
+                                      <label htmlFor="title" className="headings">
+                                        <b>Title</b>
+                                      </label>
+                                      <br />
+                                      <input
+                                        type="text"
+                                        className="form-control my-2"
+                                        id="title"
+                                        style={fstyle}
+                                        placeholder="Enter your title"
+                                        value={blogObj.title}
+                                        onChange={(e) => updateBlogForm(e, "title")}
+                                      />
+                                    </div>
+                                    <div className="form-group my-2">
+                                      <label htmlFor="descp" className="headings">
+                                        <b>Description</b>
+                                      </label>
+                                      <br />
+                                      <input
+                                        type="textarea"
+                                        className="form-control my-2"
+                                        id="descp"
+                                        style={fstyle}
+                                        placeholder="Enter your description"
+                                        value={blogObj.description}
+                                        onChange={(e) => updateBlogForm(e, "description")}
+                                      />
+                                    </div>
+                                  </form>
+                                </div>
+                                <div className="modal-footer">
+                                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="button" onClick={() => updateBlog(blogObj._id)
+                                  } className="btn btn-primary" data-bs-dismiss="modal">
+                                    Update
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         <div className="col">
                           <button className="btn-light btn" onClick={() => deleteBlog(data._id)} >Delete</button>
                         </div>
                       </div>
+
                     </div>
                   </div>
+
                 </div>
 
+              ))}
 
-                <hr />
-              </div>
-            ))}
+              <hr />
+            </div>
           </div>
         </div>
       </div>
