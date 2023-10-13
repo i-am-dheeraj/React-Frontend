@@ -1,14 +1,69 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
-
+import "./config"
 import myimage1 from "./pages/Profile/img1.png";
 import axios from "axios";
+import { firebaseRef, storage } from './config';
+
 export default function Blog() {
   const [blogList, setBlogList] = useState([])
   const [userId, setUserId] = useState([])
+  const [imageUpload, setImageUpload] = useState(null);
+  const [fileObj,setFileObj] = useState({
+    file: null,
+    image: null
+  })
   const fstyle = {
     borderRadius: "30px",
   };
+ 
+
+
+  // handleFileChange = (e) => {
+  //   if (e.target.files[0]) {
+  //     const image = e.target.files[0];
+  //     setFileObj((prevValue) => {
+  //       return { file: e.target.files[0], image: image };
+  //     });
+  //   }
+  // };
+
+ const handleUpload = (e) => {
+  const image = e.target.files[0];
+  console.log("image90",image);
+
+
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  console.log("functiion called", uploadTask)
+
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      // progrss function ....
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      // this.setState({progress});
+    }, 
+    (error) => {
+         // error function ....
+      console.log(error);
+    }, 
+  () => {
+      // complete function ....
+      storage.ref('images').child(image.name).getDownloadURL().then(url => {
+          console.log(url);
+          setBlogObj((prevValue) => {
+            return {
+              title: prevValue.title,
+              description: prevValue.description,
+              image: url,
+              _id: prevValue?._id,
+              userId:prevValue?.userId
+            }
+          })
+          // this.setState({url});
+      })
+  });
+}
+
 useEffect(()=>{
   const id = JSON.parse(localStorage.getItem('user'));
   setUserId(id._id)
@@ -188,7 +243,7 @@ useEffect(()=>{
 
                   <form>
                     <div className="form-group">
-                      <img src={myimage1} alt=".." />
+                      <img width={50} src={blogObj?.image} alt=".." />
                       <label htmlFor="image">
                         &nbsp;<b>Image</b>
                       </label>
@@ -199,6 +254,9 @@ useEffect(()=>{
                         id="image"
                         accept="image/*"
                         alt=""
+                        onChange={(e) => {
+                          handleUpload(e);
+                        }}
                       />
                     </div>
                     <div className="form-group my-2">
@@ -253,12 +311,7 @@ useEffect(()=>{
             <div className="blog-body-head">
               <p className="bl-bd-head">All Blogs</p>
             </div>
-            {/* {blogList?.map((blog) =>  (
-      <>
-        <p>{blog.title}</p>
-      </>
-    )
-  )} */}
+           
             <div className="blog-body-sec">
               <div className="row">
                 <hr />
@@ -281,14 +334,15 @@ useEffect(()=>{
                 <hr />
               </div>
             </div>
+            {blogList.map((data, index) => (
             <div className="blog-body-sec">
-              {blogList.map((data, index) => (
+              
                 <div className="row" key={data?._id}>
                   <div className="col-1">
                     <p className="blog-text">{index + 1}</p>
                   </div>
                   <div className="col-2">
-                    <img src={data.image} alt=".." />
+                    <img width={50} src= {data?.image} alt=".." />
                   </div>
                   <div className="col">
                     <p className="blog-text">{data.title}</p>
@@ -322,10 +376,11 @@ useEffect(()=>{
 
                 </div>
 
-              ))}
+            
 
               <hr />
             </div>
+              ))}
             <div className="modal" tabIndex="-1" id="edit">
                             <div className="modal-dialog">
                               <div className="modal-content">
@@ -343,11 +398,16 @@ useEffect(()=>{
                                       </label>
                                       <br />
                                       <input
-                                        type="file"
+                                        label="Image"
                                         className="form-control-file"
                                         id="image"
                                         accept="image/*"
-                                        alt=""
+                                        placeholder="Select Image"
+                                        type="file"
+                                        onChange={(e) => {
+                                          handleUpload(e);
+                                        }}
+                                      
                                       />
                                     </div>
                                     <div className="form-group my-2">

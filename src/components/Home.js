@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import image1 from "../components/card3.jpg";
-import image2 from "../components/coding2.jpg";
+
 import './Home.css';
 import {
   createBrowserRouter,
@@ -26,7 +25,9 @@ const Navbar = () => {
   }, [])
 
   const getAllBlogs = () => {
-    const apiUrl = 'http://localhost:3001/bloguser/blogget';
+    const id = JSON.parse(localStorage.getItem('user'));
+    console.log(id._id,'lllll')
+    const apiUrl = `http://localhost:3001/bloguser/getbyuserID/${id._id}`;
 
     axios
       .get(apiUrl)
@@ -40,7 +41,8 @@ const Navbar = () => {
         console.error('Error:', err);
       });
   };
-   
+
+
 
   return (
     <div className="image">
@@ -93,158 +95,36 @@ const Navbar = () => {
         </p>
       </div>
       <div id="carouselExampleCaptions" className="carousel slide">
-        <div className="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        </div>
+        
         
         <div className="carousel-inner">
        
-          <div className="carousel-item active">
+          <div className="carousel-item active" style={{ display:"flex" ,flexDirection:"row", justifyContent:"space-around" }}>
           {blogList.map((data, index) => (
-            <div className="row">
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="vgjvhbkj" md-3 />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    {/* <h5>First slide label</h5> */}
-                    <p>{data.title}</p>
+            <div className="row ">
+            
+                <div className="card" style={{ width: "18rem" }}>
+  <img className="card-img-top" src={data?.image} alt="Card image cap" />
+  <div className="card-body">
+   
+    <p>{data.title}</p>
                     <p>{data.description}</p>
-                  </div>
-                </div>
+      
+    
+  </div>
+</div>
 
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p>{data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p>{data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
+
+              
               
             </div>
-             ))}
-          </div>
+             
+          
         
-         
-          <div className="carousel-item">
-          {blogList.map((data, index) => (
-            <div className="row">
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="vgjvhbkj" md-3 />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            ))}
-          </div>
-           
-            
-          <div className="carousel-item">
-          {blogList.map((data, index) => (
-            <div className="row">
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="vgjvhbkj" md-3 />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <p>{data.title}</p>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg col-sm-12 col-md-6 mt-5 mb-5">
-                <div className="card">
-                  <img className="card-img-top" src={image1} alt="Card image cap" />
-                  <div className="carousel-caption cardtext d-none d-md-block">
-                    <span>{data.title}</span>
-                    <p> {data.description}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-             ))}
-          </div>
-           
+        ))}
+         </div>
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+       
       </div>
     </div>
   );
