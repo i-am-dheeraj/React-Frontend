@@ -4,6 +4,7 @@ import "./config"
 import myimage1 from "./pages/Profile/img1.png";
 import axios from "axios";
 import { firebaseRef, storage } from './config';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 
 export default function Blog() {
   const [blogList, setBlogList] = useState([])
@@ -352,7 +353,7 @@ useEffect(()=>{
                   </div>
                   <div className="col">
                     <div className="col text-end">
-                      <div className="row">
+                      <div className="row" style={{flexWrap:"nowrap"}}>
                         <div className="col">
                           <button
                             type="button"
@@ -369,6 +370,12 @@ useEffect(()=>{
                         <div className="col">
                           <button className="btn-light btn" onClick={() => deleteBlog(data._id)} >Delete</button>
                         </div>
+                        <div className="col">
+                        
+                        <Link to="/singleblog" state={{ blogsObj: data }} class="dropdown-item">View Detail</Link>
+                                                   
+                                               
+                          </div>
                       </div>
 
                     </div>
@@ -447,6 +454,7 @@ useEffect(()=>{
                                   <button type="button" onClick={() => updateBlog(blogObj._id)} className="btn btn-primary">
                                     Update
                                   </button>
+                                 
                                 </div>
                               </div>
                             </div>

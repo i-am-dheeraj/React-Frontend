@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image1 from "../Logo.png";
 import avatar from "../avatar.jpg";
 import dash from "../dash.svg";
@@ -9,12 +9,31 @@ import profile from "../profile.png";
 import notify from "../notification.png";
 import dark from "../dark-mode.png";
 import info from "../info.png";
+import DarkModeToggle from './DarkModeToggle';
+import Toggle from 'react-toggle';
 // import Profile from "./pages/Profile";
 import { Link } from "react-router-dom";
 import Project from "./project/project";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+
 export default function Sidebar() {
+  const [isDark, setIsDark] = useState(false);
+
+    // Function to toggle dark mode
+    const toggleDarkMode = () => {
+        // Toggle dark mode logic here
+        setIsDark(!isDark);
+    };
+
+    useEffect(() => {
+        // Apply dark mode styles to the entire page
+        document.body.classList.toggle("dark-mode", isDark);
+    }, [isDark]);
   const user = JSON.parse(localStorage.getItem('user'));
+ 
   // const handleLogout = () => {};
+  
   return (
     <>
       <div className="container-fluid d-flex">
@@ -58,7 +77,7 @@ export default function Sidebar() {
             <img src={notify} alt=".." className="vector" />
           </div>
           <div className="col">
-            <img src={dark} alt=".." className="vector" />
+          <DarkModeToggle />
           </div>
           <div className="col">
             <img src={info} alt=".." className="vector" />

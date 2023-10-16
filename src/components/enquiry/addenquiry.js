@@ -6,7 +6,7 @@ import axios from "axios";
 function ContactForm() {
     const [enquiryObj, setenquiryObj] = useState({
     username: "",
-    date: "",
+    
     email: "",
     enquiry: "",
   });
@@ -19,7 +19,7 @@ function ContactForm() {
     setenquiryObj((prevValue) => {
       return {
         username: field === 'username' ? e.target.value : prevValue.username,
-        date: field === 'date' ? e.target.value : prevValue.date,
+       
         email: field === 'email' ? e.target.value : prevValue.email,
         enquiry: field === 'enquiry' ? e.target.value : prevValue.enquiry,
         
@@ -62,19 +62,7 @@ function ContactForm() {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="date">date:</label>
-          <input
-            type="date"
-            name="date"
-            id="date"
-            
-          
-            className="form-control"
-            placeholder="Date"
-            onChange={(e) => updateenquiryForm(e, "date")}
-          />
-        </div>
+        
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -106,6 +94,10 @@ function ContactForm() {
         <button type="submit" className="btn btn-primary"onClick={($event) => createenquiry($event)}>
           Submit
         </button>
+        <Link to="/home" className="btn btn-secondary">
+                  {" "}
+                  DISCARD{" "}
+                </Link>
       </form>
     </div>
 

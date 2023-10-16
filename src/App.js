@@ -2,7 +2,7 @@
 import "./App.css";
 import Profile from "../src/components/pages/Profile/Profile";
 import Login from "../src/components/login";
-
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard";
 import Blog from "./components/Blog";
@@ -13,11 +13,14 @@ import Addproject from "./components/project/addproject";
 import Editproject from "./components/project/editproject";
 import Enquiry from "./components/enquiry/enquiry";
 import Addenquiry from "./components/enquiry/addenquiry";
-
+import Details from "./components/enquiry/details";
+import Singleblog from "./components/singleblog";
 
 
 function App() {
+
   return (
+
     <BrowserRouter>
       <Routes>
 
@@ -35,8 +38,11 @@ function App() {
           <Route path="/editproject"  element={<Editproject/>}/>
           <Route path = "/Blog" element = {<Blog/>}/>
           <Route path="/addenquiry" element={<Addenquiry/>}/>
+          <Route path="/details" element={<Details/>}/>
+          <Route path="/singleblog" element={<Singleblog/>}/>
         </Route>
       </Routes>
+    
     </BrowserRouter>
   );
 }

@@ -5,15 +5,20 @@ import Sidebar from "../Sidebar";
 import axios from "axios";
 
 
+import "../enquiry/dark-mode.css";
 
 export default function Enquiry({ query, onQueryUpdated }) {
+  
     const [enquiryObj, setenquiryObj] = useState({
         "username": "",
         "email": "",
-        "date":"",
+       
         "enquiry": "",
       });
   const [enquiryList, setenquiryList] = useState([])
+
+
+ 
 
   useEffect(() => {
     getAllenquirys()
@@ -36,26 +41,33 @@ export default function Enquiry({ query, onQueryUpdated }) {
         console.error('Error:', err);
       });
   };
+  const tableStyle = {
+    borderCollapse: 'collapse',
+    width: '100%',
+};
+
+const thStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
+
+const tdStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
 
   
-  const deleteenquiry = (enquiryId) => {
-    axios
-      .delete(`http://localhost:3001/enquiryuser/enquirydelete/${enquiryId}`)
-      .then((response) => {
-        console.log('enquiry deleted:', response.data);
-        setenquiryList(enquiryList.filter((enquiry) => enquiry._id !== enquiryId));
-      })
-      .catch((error) => {
-        console.error('Error deleting enquiry:', error);
-      });
-  }
-
-
+ 
+  
+  
  
 
   return (
     <>
       <Sidebar />
+      
       <div className="container blog">
         <div className="blog-sec">
           <div className="blog-head-sec">
@@ -64,89 +76,55 @@ export default function Enquiry({ query, onQueryUpdated }) {
                 <p className="blog-head">Enquiry</p>
               </div>
 
-              <div class="input-group date datepicker">
-                <input
-                  type="text"
-                  
-                  id="startDate"
-                  placeholder="dd/mm/yyyy"
-                />
-                <div class="input-group-addon">
-                  <span class="glyphicon glyphicon-th"></span>
-                </div>
               </div>
-           
-
-          
-              <div class="input-group date datepicker">
-                <input
-                  type="text"
-                 
-                  id="endDate"
-                  placeholder="dd/mm/yyyy"
-                />
-                <div class="input-group-addon">
-                  <span class="glyphicon glyphicon-th"></span>
-                </div>
-              </div>
-             
-              <div className="col-2 text-end">
-                <Link to="/enquiry" className="btn btn-primary">
-                  {" "}
-                  FILTER{" "}
-                </Link>
-              </div>
-              <div className="col-1 text-end">
-                <Link to="/enquiry" className="btn btn-secondary">
-                  {" "}
-                  RESET{" "}
-                </Link>
-              </div>
-             
-            </div>
-            </div>
-            <hr></hr>
-
-            
-            <table>
+</div>
+            <table style={tableStyle}>
                             <thead>
                                 <tr>
-                                    <th >S.No</th>
-                                    <th >Date</th>
-                                    <th >Name</th>
-                                    <th >Email ID</th>
-                                    <th >Queries</th>
-                                    <th >Status</th>
-                                    <th >Action</th>
+                                    <th style={thStyle}>S.No</th>
+                                   
+                                    <th style={thStyle}>Name</th>
+                                    <th style={thStyle}>Email ID</th>
+                                    <th style={thStyle}>Queries</th>
+                                    <th style={thStyle}>Status</th>
+                                    <th style={thStyle}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {enquiryList.map((data, index) =>(
-                                <tr key={data?._id}>
-                                    <td >{index+1}</td>
-                                    <td >{data.date}</td>
-                                    <td >{data.username}</td>
-                                    <td >{data.email}</td>
-                                    <td >{data.enquiry}</td>
-                                    <td >
-                                        <button class="btn btn-info">Pending</button>
-                                    </td>
-                                    <td >
-                                        <select id="action" name="action">
-                                            <option value="detail">View Detail</option>
-                                            <option value="sendvia">Send via Email</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                 ))}
+                                {enquiryList.map((data, index) => (
+                                    <tr key={data?._id}>
+                                        <td style={tdStyle}>{index + 1}</td>
+                                       
+                                        <td style={tdStyle}>{data.username}</td>
+                                        <td style={tdStyle}>{data.email}</td>
+                                        <td style={tdStyle}>{data.enquiry}</td>
+                                        
+                                        <td style={tdStyle}>
+                                            <button class="btn btn-danger">Pending</button>
+                                        </td>
+                                        <td style={tdStyle}>
+
+                                            <div class="dropdown">
+                                                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><Link to="/details" state={{ viewObj: data }} class="dropdown-item">View Detail</Link></li>
+                                                    <li><Link to="/#" class="dropdown-item">Send via Email</Link></li>
+                                                </ul>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
+
                         </table>
 
-
-
+ 
                     </div>
                 </div>
-          
+        
       
     </>
   );
