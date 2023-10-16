@@ -1,5 +1,5 @@
 import React from "react";
-// import myimage1 from "./img1.png";
+import myimage1 from "../pages/Profile/img1.png";
 import { firebaseRef, storage } from '../config';
 import "../config"
 import { useEffect } from "react";
@@ -98,7 +98,7 @@ export default function Addproject() {
       <div className="container my-lg-5 profile">
       <form>
                     <div className="form-group">
-                      <img width={50} src="" alt=".." />
+                      <img width={50} src={myimage1} alt="image" />
                       <label htmlFor="image">
                         &nbsp;<b>Image</b>
                       </label>

@@ -1,42 +1,41 @@
-/* Additional CSS for dark mode button */
-.dark-mode .custom-toggle {
-    background-color: #2c2c2c; /* Dark background color for the button */
-    color: #ffffff; /* Light text color for the button */
-    border: 1px solid #fff; /* Add a border to the button */
-    padding: 5px 10px; /* Adjust padding for the button */
-    border-radius: 5px; /* Add rounded corners to the button */
-    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
-  
-    &:hover {
-      background-color: #444; /* Dark background color on hover */
-    }
-  }
-/* Light mode styles */
-body {
-    background-color: #fff;
-    color: #000;
-    /* Add other light mode styles */
-  }
-  
-  /* Dark mode styles */
-  body.dark-mode {
-    background-color: #121212; /* Dark background color */
-    color: #f0f0f0; /* Light text color */
-    /* Add other dark mode styles */
-  }
-/* dark-mode.css */
-
-/* Background and text color for the entire page */
-body.dark-mode {
-    background-color: #333; /* Dark background color */
-    color: #fff; /* Light text color */
+/* Variables for common styles */
+:root {
+    --thumb-color: #fff;
+    --thumb-border: 2px solid #ccc;
+    --track-color: #ccc;
+    --background-color: #222;
 }
 
-/* Example: Dark mode for buttons */
-.dark-mode .btn {
-    background-color: #222; /* Dark background color for buttons */
-    color: #fff; /* Light text color for buttons */
+/* Style the toggle container */
+.react-toggle {
+    display: inline-block;
+    height: 28px;
+    width: 50px;
+    margin-right: 10px; /* Adjust margins as needed */
 }
 
-/* Add more styles for different elements as needed */
-    
+/* Style the input checkbox (hide it) */
+.react-toggle-screenreader-only {
+    position: absolute;
+    left: -10000px;
+}
+
+/* Style the moon and sun icons */
+.react-toggle-thumb {
+    height: 24px;
+    width: 24px;
+    background-color: var(--thumb-color);
+    border: var(--thumb-border);
+}
+
+/* Style the track background */
+.react-toggle-track {
+    background-color: var(--track-color);
+}
+
+/* Style the overall background */
+.dark-mode {
+    background-color: var(--background-color);
+}
+
+/* Additional dark mode styles can be added here */

@@ -18,7 +18,23 @@ export default function Blog() {
     borderRadius: "30px",
   };
  
+  const tableStyle = {
+    borderCollapse: 'collapse',
+    width: '100%',
+};
 
+const thStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
+
+const tdStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
+ 
 
   // handleFileChange = (e) => {
   //   if (e.target.files[0]) {
@@ -318,44 +334,29 @@ useEffect(()=>{
                 <hr />
               </div>
               <div className="row">
-                <div className="col-1">
-                  <p className="blog-text">S.no</p>
-                </div>
-                <div className="col-2">
-                  <p className="blog-text">Image</p>
-                </div>
-                <div className="col">
-                  <p className="blog-text">Title</p>
-                </div>
-                <div className="col-6">
-                  <p className="blog-text">Description</p>
-                </div>
-              </div>
-              <div className="row">
-                <hr />
-              </div>
-            </div>
+              <table style={tableStyle}>
+                            <thead>
+                                <tr>
+                                    <th style={thStyle}>S.No</th>
+                                    <th style={thStyle}>Image</th>
+                                    <th style={thStyle}>Title</th>
+                                    <th style={thStyle}>Description</th>
+                                    <th style={thStyle}>Edit</th>
+                                    <th style={thStyle}>Delete</th>
+                                    <th style={thStyle}>Details</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
             {blogList.map((data, index) => (
-            <div className="blog-body-sec">
+           
               
-                <div className="row" key={data?._id}>
-                  <div className="col-1">
-                    <p className="blog-text">{index + 1}</p>
-                  </div>
-                  <div className="col-2">
-                    <img width={50} src= {data?.image} alt=".." />
-                  </div>
-                  <div className="col">
-                    <p className="blog-text">{data.title}</p>
-                  </div>
-                  <div className="col">
-                    <p className="blog-text">{data.description}</p>
-                  </div>
-                  <div className="col">
-                    <div className="col text-end">
-                      <div className="row" style={{flexWrap:"nowrap"}}>
-                        <div className="col">
-                          <button
+                  <tr key={data?._id}>
+                                        <td style={tdStyle}>{index + 1}</td>
+                                        <td style={tdStyle}><img width={50} src= {data?.image} alt=".." /></td>
+                                        <td style={tdStyle}>{data.title}</td>
+                                        <td style={tdStyle}>{data.description}</td>
+                  
+                                        <td style={tdStyle}>  <button
                             type="button"
                             className="btn btn-primary"
                             data-bs-toggle="modal"
@@ -363,31 +364,22 @@ useEffect(()=>{
                             onClick={() => openEditModal(data)}
                           >
                             Edit
-                          </button>
+                          </button></td>
                        
-                        </div>
+                          <td style={tdStyle}>  <button className="btn-light btn" onClick={() => deleteBlog(data._id)} >Delete</button></td>
                        
-                        <div className="col">
-                          <button className="btn-light btn" onClick={() => deleteBlog(data._id)} >Delete</button>
-                        </div>
-                        <div className="col">
                         
-                        <Link to="/singleblog" state={{ blogsObj: data }} class="dropdown-item">View Detail</Link>
+                          < td style={tdStyle}>  <Link to="/singleblog" state={{ blogsObj: data }} class="dropdown-item">View Detail</Link></td>
                                                    
                                                
-                          </div>
-                      </div>
+                        
+                   
 
-                    </div>
-                  </div>
+                </tr>
+                ))}
+            </tbody>
 
-                </div>
-
-            
-
-              <hr />
-            </div>
-              ))}
+        </table>
             <div className="modal" tabIndex="-1" id="edit">
                             <div className="modal-dialog">
                               <div className="modal-content">
@@ -461,6 +453,8 @@ useEffect(()=>{
                           </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
     </>
   );

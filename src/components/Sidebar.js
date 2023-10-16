@@ -22,15 +22,23 @@ export default function Sidebar() {
   const [isDark, setIsDark] = useState(false);
 
     // Function to toggle dark mode
-    const toggleDarkMode = () => {
-        // Toggle dark mode logic here
-        setIsDark(!isDark);
-    };
+  // Function to toggle dark mode
 
-    useEffect(() => {
-        // Apply dark mode styles to the entire page
-        document.body.classList.toggle("dark-mode", isDark);
-    }, [isDark]);
+  useEffect(() => {
+    if (isDark) {
+      // Dark mode styles
+      document.body.style.backgroundColor = "#222"; // Dark background color
+      document.body.style.color = "#000"; // Black text color
+    } else {
+      // Light mode styles
+      document.body.style.backgroundColor = "#fff"; // Light background color
+      document.body.style.color = "#000"; // Black text color
+    }
+  }, [isDark]);
+
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+  };
   const user = JSON.parse(localStorage.getItem('user'));
  
   // const handleLogout = () => {};

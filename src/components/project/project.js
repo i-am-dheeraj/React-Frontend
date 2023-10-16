@@ -33,7 +33,22 @@ export default function Project() {
   }
 
   
+  const tableStyle = {
+    borderCollapse: 'collapse',
+    width: '100%',
+};
 
+const thStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
+
+const tdStyle = {
+    border: '1px solid #000',
+    padding: '8px',
+    textAlign: 'left',
+};
  
   
   
@@ -101,97 +116,66 @@ export default function Project() {
     <>
       <Sidebar />
       
-
       <div className="container blog">
-                <div className="blog-sec">
-                    <div className="blog-head-sec">
-                        <div className="row blog-row1">
-                            <div className="col">
-                                <p className="blog-head">My Projects</p>
-                            </div>
-                            <div className="col text-end">
-                                  <Link to="/addproject" className="btn btn-primary btn-lg" id="bt2">
+        <div className="blog-sec">
+          <div className="blog-head-sec">
+            <div className="row blog-row1 " style={{display:"flex"}}>
+              <div className="col ">
+                <p className="blog-head">PROJECTS</p>
+                </div>
+                <div className="col " style={{display:"contents"}}>
+              <Link to="/addproject" className="btn btn-primary btn-lg" id="bt2">
             Add
-           </Link> 
-
-
-                            </div>
-                        </div>
-                    </div>
-         
-          <div className="blog-body container">
-            <div className="blog-body-head">
-              <p className="bl-bd-head">All Project</p>
-            </div>
-            
-            <div className="blog-body-sec">
-              <div className="row">
-                <hr />
+           </Link> </div>
               </div>
-              <div className="row">
-                <div className="col-1">
-                  <p className="blog-text">S.no</p>
-                </div>
-                <div className="col-1">
-                  <p className="blog-text">Image</p>
-                </div>
-                <div className="col-1">
-                  <p className="blog-text">Title</p>
-                </div>
-                <div className="col-2">
-                  <p className="blog-text">Description</p>
-                </div>
-                <div className="col-2">
-                  <p className="blog-text">Url</p>
-                </div>
-                <div className="col-1">
-                  <p className="blog-text">Type</p>
-                </div>
-              </div>
-              <div className="row">
-                <hr />
-              </div>
-            </div>
-            {projectList.map((data, index) => (
-            <div className="blog-body-sec">
-                <div className="row" key={data?._id}>
-                  <div className="col-1">
-                    <p className="blog-text">{index + 1}</p>
-                  </div>
-                  <div className="col-1">
-                    <img width={50} src= {data?.image} alt=".." />
-                  </div>
-                  <div className="col-1">
-                    <p className="blog-text">{data.title}</p>
-                  </div>
-                  <div className="col-2">
-                    <p className="blog-text">{data.description}</p>
-                  </div>
-                  <div className="col-2">
-                    <p className="blog-text">{data.url}</p>
-                  </div>
-                  <div className="col-1">
-                    <p className="blog-text">{data.type}</p>
-                  </div>
-                 
-                  <div className="col" style={{display:"contents"}}>
-                  
-                <Link to="/editproject" state={{ editableObj: data }} className="btn btn-primary btn-lg" id="bt2">
+</div>
+            <table style={tableStyle}>
+                            <thead>
+                                <tr>
+                                    <th style={thStyle}>S.No</th>
+                                   
+                                    <th style={thStyle}>Image</th>
+                                    <th style={thStyle}>Title</th>
+                                    <th style={thStyle}>Description</th>
+                                    <th style={thStyle}>Url</th>
+                                    <th style={thStyle}>type</th>
+                                    <th style={thStyle}>Edit</th>
+                                    <th style={thStyle}>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {projectList.map((data, index) => (
+                                    <tr key={data?._id}>
+                                        <td style={tdStyle}>{index + 1}</td>
+                                       
+                                        <td style={tdStyle}><img width={50} src= {data?.image} alt=".." /></td>
+                                        <td style={tdStyle}>{data.title}</td>
+                                        <td style={tdStyle}>{data.description}</td>
+                                        <td style={tdStyle}>{data.url}</td>
+                                        <td style={tdStyle}>{data.type}</td>
+                                      
+                                        <td style={tdStyle}>
+                                       
+                                        <Link to="/editproject" state={{ editableObj: data }} className="btn btn-primary btn-lg" id="bt2">
             Edit
-          </Link>
-                  <div className="col">
+          </Link></td>
+         <td style={tdStyle}>
                   <button type="button" class="btn btn-secondary btn-lg" onClick={() => deleteproject(data._id)} >Delete</button>
-                  </div>
                  
-                 
+                  </td>         
+
+                                     
+                                    </tr>
+                                ))}
+                            </tbody>
+
+                        </table>
+
+ 
+                    </div>
                 </div>
-                </div>
-              <hr />
-            </div>
-              ))}
-          </div>
-        </div>
-      </div>   
+        
+       
     </>
   );
 }
