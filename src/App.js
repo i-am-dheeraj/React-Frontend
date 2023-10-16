@@ -7,7 +7,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard";
 import Blog from "./components/Blog";
 import Signup from "./components/signup";
-import Home from"./components/Home";
+import Home from "./components/Home";
+import Project from './components/project/project';
+import Addproject from "./components/project/addproject";
+import Editproject from "./components/project/editproject";
+import Enquiry from "./components/enquiry/enquiry";
+import Addenquiry from "./components/enquiry/addenquiry";
+
+
 
 function App() {
   return (
@@ -22,8 +29,12 @@ function App() {
           <Route path = "/signup" element = {<Signup/>}/>
           <Route path = "/dashboard" element={<Dashboard/>}/>
           <Route path = "/profile" element={<Profile/>}/>
-          
+          <Route path = "/Project" element={<Project/>}/>
+          <Route path="/addproject"  element={<Addproject/>}/>
+          <Route path="/enquiry" element={<Enquiry/>}/>
+          <Route path="/editproject"  element={<Editproject/>}/>
           <Route path = "/Blog" element = {<Blog/>}/>
+          <Route path="/addenquiry" element={<Addenquiry/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

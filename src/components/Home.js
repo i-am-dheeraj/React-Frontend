@@ -66,22 +66,27 @@ const Navbar = () => {
           <ul className="nav justify-content-end " id="home">
             <li className="nav-item ">
               <Link className="nav-link active" to="/home">
-                Home
+                HOME
               </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                Pages
+                PAGES
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link " href="#">
-                Blog
+                BLOG
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link " href="addenquiry">
+                CONTACT US
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link " href="Login">
-                Login
+                LOGIN
               </a>
             </li>
           </ul>

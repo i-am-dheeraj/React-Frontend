@@ -163,8 +163,9 @@ height: 100%;
     width: 25px;
 
 }
-#p1{
 
+.carousel-item {
+  flex-wrap: wrap;
 }
 .carousel-indicators {
     position: absolute;

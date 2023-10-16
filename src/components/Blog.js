@@ -137,7 +137,7 @@ useEffect(()=>{
     axios
       .put(`http://localhost:3001/bloguser/blogupdate/${id}`, blogObj)
       .then((response) => {
-        // console.log('Blog updated:', response.data);
+        
         window.location.reload(true);
         getAllBlogs()
       })

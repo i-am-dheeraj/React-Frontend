@@ -11,6 +11,7 @@ import dark from "../dark-mode.png";
 import info from "../info.png";
 // import Profile from "./pages/Profile";
 import { Link } from "react-router-dom";
+import Project from "./project/project";
 export default function Sidebar() {
   const user = JSON.parse(localStorage.getItem('user'));
   // const handleLogout = () => {};
@@ -30,6 +31,14 @@ export default function Sidebar() {
           <Link to="/profile">
             <img src={profile} alt=".." />
             PROFILE
+          </Link>
+          <Link to="/Project">
+            <img src={profile} alt=".." />
+            PROJECT
+          </Link>
+          <Link to="/enquiry">
+            <img src={profile} alt=".." />
+            ENQUIRY
           </Link>
         </div>
         <div className="cover"></div>
@@ -81,6 +90,7 @@ export default function Sidebar() {
                   Profile
                 </Link>
               </li>
+            
               <li>
                 <Link class="dropdown-item" to="/login">
                   <button className="btn btn-danger">Logout</button>
