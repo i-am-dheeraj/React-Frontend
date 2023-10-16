@@ -10,6 +10,7 @@ import notify from "../notification.png";
 import dark from "../dark-mode.png";
 import info from "../info.png";
 import DarkModeToggle from './DarkModeToggle';
+
 import Toggle from 'react-toggle';
 // import Profile from "./pages/Profile";
 import { Link } from "react-router-dom";
@@ -76,9 +77,14 @@ export default function Sidebar() {
           <div className="col">
             <img src={notify} alt=".." className="vector" />
           </div>
+          
+         
           <div className="col">
-          <DarkModeToggle />
-          </div>
+  <DarkModeToggle isDark={isDark} onToggle={toggleDarkMode} />
+</div>
+
+
+        
           <div className="col">
             <img src={info} alt=".." className="vector" />
           </div>

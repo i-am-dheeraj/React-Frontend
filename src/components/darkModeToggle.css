@@ -1,0 +1,27 @@
+/* DarkModeToggle.css */
+
+/* Style the toggle container */
+.react-toggle {
+    display: inline-block;
+    height: 28px;
+    width: 50px;
+    margin-right: 10px; /* Adjust margins as needed */
+  }
+  
+  /* Style the input checkbox (hide it) */
+  .react-toggle-screenreader-only {
+    position: absolute;
+    left: -10000px;
+  }
+  
+  /* Style the moon and sun icons */
+  .react-toggle-thumb {
+    height: 24px;
+    width: 24px;
+  }
+  
+  /* Style the track background */
+  .react-toggle-track {
+    background-color: #ccc; /* Track color in off state */
+  }
+  
